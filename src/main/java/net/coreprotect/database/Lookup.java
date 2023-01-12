@@ -1,5 +1,6 @@
 package net.coreprotect.database;
 
+import java.nio.charset.StandardCharsets;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -55,7 +56,7 @@ public class Lookup extends Queue {
                             results[newId] = (String) map[i];
                         }
                     }
-                    else if (i == 13 && map[i] instanceof Byte[]) {
+                    else if (i == 13 && map[i] instanceof byte[]) {
                         results[newId] = Util.byteDataToString((byte[]) map[i], (int) map[6]);
                     }
                     else if (i > 0) { // skip rowid
@@ -64,6 +65,9 @@ public class Lookup extends Queue {
                         }
                         else if (map[i] instanceof String) {
                             results[newId] = (String) map[i];
+                        }
+                        else if (map[i] instanceof byte[]) {
+                            results[newId] = new String((byte[]) map[i], StandardCharsets.ISO_8859_1);
                         }
                     }
                 }
